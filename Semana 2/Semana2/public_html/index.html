@@ -148,7 +148,7 @@
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        mat4.perspective(40, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+        mat4.perspective(40, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);//si se cambia el angulo se acerca o se aleja 
 
         mat4.identity(mvMatrix);
 
@@ -163,6 +163,12 @@
         gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, squareVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
         setMatrixUniforms();
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, squareVertexPositionBuffer.numItems);
+        
+        //GL.LINES DIBUJAN SOLO UNA LINEA DEL TRIANGULO Y DOS DEL CUADRADO
+        //GL.POINTS DESAPARECE EL TRIANGULO Y EL CUADRO
+        //GL.LINE_LOOP DIBUJA EL TRIANGULO CON LINEAS PERO EL CUADRADO NO
+        //GL.LINE_STRIP SOLO DIBUJA DOS LINEAS DEL TRIANGULO
+        //TRIANGLE_FAN DIBUJA EL TRIANGULO Y EL CUADRADO LO MEDIO DIBUJA POR QUE LE FALTA UN PEDASO
     }
 
 
