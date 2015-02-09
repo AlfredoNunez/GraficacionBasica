@@ -153,6 +153,8 @@
         mat4.identity(mvMatrix);
 
         mat4.translate(mvMatrix, [-3.0, 0.0, -14.0]);
+        //mvPushMatrix();//semana 4
+        //mat4.rotate(mvMatrix, degToRad(rTri), [1,0,0]);//semana4
         gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
         gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
         setMatrixUniforms();
