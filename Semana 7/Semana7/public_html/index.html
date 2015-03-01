@@ -186,19 +186,19 @@
       // Front face
       0.0, 0.0,
       1.0, 0.0,
-      1.0, 1.0,
       0.0, 1.0,
+      1.0, 1.0,
 
       // Back face
-      1.0, 0.0,
-      1.0, 1.0,
-      0.0, 1.0,
       0.0, 0.0,
+      1.0, 0.0,
+      0.0, 1.0,
+      1.0, 1.0,
 
       // Top face
-      0.0, 1.0,
       0.0, 0.0,
-      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0,
       1.0, 1.0,
 /*
       // Bottom face
@@ -226,10 +226,10 @@
        squareVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
         vertices = [
-             1.0,  1.0,  0.0,
-            -1.0,  1.0,  0.0,
+            -1.0, -1.0,  0.0,
              1.0, -1.0,  0.0,
-            -1.0, -1.0,  0.0
+            -1.0,  1.0,  0.0,
+             1.0,  1.0,  0.0
         ];
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
         squareVertexPositionBuffer.itemSize = 3;
@@ -348,7 +348,7 @@
         initBuffers();
         initTexture();//semana 6
 
-        gl.clearColor(0.7, 0.0, 0.9, 1.0);
+        gl.clearColor(-2.7, -5.0, 0.9, 1.0);
         gl.enable(gl.DEPTH_TEST);
 
         //drawScene();
