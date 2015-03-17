@@ -10,26 +10,25 @@
     #ifdef GL_ES
     precision highp float;
     #endif
-    varying vec4 vColor;
+    varying vec4 vColor; //semana 3
 
     void main(void) {
         //gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-        gl_FragColor = vColor;
+        gl_FragColor = vColor;//semana 3
     }
 </script>
 
 <script id="shader-vs" type="x-shader/x-vertex">
     attribute vec3 aVertexPosition;
-    attribute vec4 aVertexColor;
+    attribute vec4 aVertexColor; //semana3
 
     uniform mat4 uMVMatrix;
-    uniform mat4 uPMatrix;
-    
-    varying vec4 vColor;
+    uniform mat4 uPMatrix;    
+    varying vec4 vColor; //semana 3
 
     void main(void) {
         gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-        vColor = aVertexColor;
+        vColor = aVertexColor;//semana 3
     }
 </script>
 
@@ -106,14 +105,15 @@
         shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
         gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
 
-        shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
-        gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
+        shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");//semana 3
+        gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);//semana 3
     
         shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
         shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
     }
 
     var mvMatrix = mat4.create();
+    var mvMatrixStack = [];//semana 4
     var pMatrix = mat4.create();
 
     function setMatrixUniforms() {
@@ -124,10 +124,10 @@
 
 
     var triangleVertexPositionBuffer;
-    var triangleVertexColorBuffer;
+    var triangleVertexColorBuffer;//Semana .
     
     var squareVertexPositionBuffer;
-    var squareVertexColorBuffer;
+    var squareVertexColorBuffer;//Semana 3
     
     var hexagonoVertexPositionBuffer;
     var hexagonoVertexColorBuffer;
@@ -136,24 +136,44 @@
         triangleVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
         var vertices = [
-             0.0,  1.0,  0.0,
-            -1.0, -1.0,  0.0,
-             1.0, -1.0,  0.0
+             3.0, -1.0, 3.0, 
+            -3.0, -1.0, 3.0, 
+             3.0, -1.0, -3.0, 
+            -3.0, -1.0, -3.0,
+             0.0,  3.0,  0.0,
+            -3.0, -1.0,  3.0,
+             3.0, -1.0,  3.0,
+             0.0,  3.0,  0.0,
+             3.0, -1.0,  3.0,
+             3.0, -1.0, -3.0
         ];
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
         triangleVertexPositionBuffer.itemSize = 3;
-        triangleVertexPositionBuffer.numItems = 3;
+        triangleVertexPositionBuffer.numItems = 10;
         
-          triangleVertexColorBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
+          triangleVertexColorBuffer = gl.createBuffer();//semana 3
+        gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);//semana 3
         var colors = [
-        1.0, 0.0, 4.0, 1.0,
-        1.0, 3.0, -5.0, 1.0,
-        1.0, -2.0, -3.0, 8.0
+        0.0, 1.0, 0.0, 1.0,
+            1.0, 0.0, 0.0, 1.0,
+            1.0, 0.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0,
+            1.0, 0.0, 0.0, 1.0,
+            0.0, 1.0, 1.0, 1.0,
+            0.0, 0.0, 1.0, 1.0,
+            0.0, 1.0, 0.0, 1.0,
+            0.0, 1.0, 0.0, 1.0,
+            1.0, 0.0, 0.0, 1.0,
+            0.0, 1.0, 0.0, 1.0,
+            1.0, 1.0, 1.0, 1.0,
+            1.0, 0.0, 0.0, 1.0,
+            0.0, 1.0, 1.0, 1.0,
+            0.0, 0.0, 1.0, 1.0,
+            0.0, 1.0, 0.0, 1.0
          ];
          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
          triangleVertexColorBuffer.itemSize = 4;
-         triangleVertexColorBuffer.numItems = 3;
+         triangleVertexColorBuffer.numItems = 16;
          
         squareVertexPositionBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
@@ -170,15 +190,16 @@
         
          squareVertexColorBuffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
+        //glEnable(gl_BLEND);
         colors = []
         for (var i=0; i < 5; i++) {
              colors = colors.concat(    
-        // R   G    B            
-      [0.0, 1.0, 4.0, 1.0],
-      [2.0, 0.0, 1.0, 1.0], 
-      [1.0, 1.0, 1.0, 1.0], 
-      [-3.1, 0.0, 0.7,-0.7], 
-      [1.0, 0.0, 0.0, 1.5] );
+        // R   G    B           
+      [0.0, 0.0, 0.0, 0.3],
+      [0.0, 0.0, 0.0, 0.3], 
+      [1.0, 1.0, 0.0, 1.0], 
+      [1.0, 1.0, 0.0, 1.0], 
+      [0.0, 0.0, 0.0, 0.3] );
          }
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
         squareVertexColorBuffer.itemSize = 4;
@@ -220,24 +241,24 @@
 
 
     function drawScene() {
-        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+        gl.viewport(1, 0, gl.viewportWidth, gl.viewportHeight);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        mat4.perspective(40, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);//si se cambia el angulo se acerca o se aleja 
+        mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);//si se cambia el angulo se acerca o se aleja 
 
         mat4.identity(mvMatrix);
 
-        mat4.translate(mvMatrix, [-2.5, -0.3, -9.0]);
-        //mvPushMatrix();//semana 4
-        //mat4.rotate(mvMatrix, degToRad(rTri), [1,0,0]);//semana4
+         mat4.translate(mvMatrix, [-5.0, 0.0, -24.0]);
+        mvPushMatrix();//semana 4
+        mat4.rotate(mvMatrix, degToRad(rTri), [0,1,0]);//semana4
         gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
         gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, triangleVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
         gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
         gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, triangleVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
         setMatrixUniforms();
-        gl.drawArrays(gl.TRIANGLES, 0, triangleVertexPositionBuffer.numItems);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, triangleVertexPositionBuffer.numItems);
 
-        mat4.translate(mvMatrix, [6.0, -0.4, -3.8]);
+        mat4.translate(mvMatrix, [10.0, -0.4, 5.8]);
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
         gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, squareVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
         gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexColorBuffer);
@@ -251,7 +272,7 @@
         //GL.LINE_STRIP SOLO DIBUJA DOS LINEAS DEL TRIANGULO
         //TRIANGLE_FAN DIBUJA EL TRIANGULO Y EL CUADRADO LO MEDIO DIBUJA POR QUE LE FALTA UN PEDASO
         
-        mat4.translate(mvMatrix, [-3.8, 3.0, -2.0]);
+        mat4.translate(mvMatrix, [-5, 5.0, -2.0]);
         gl.bindBuffer(gl.ARRAY_BUFFER, hexagonoVertexPositionBuffer);
         gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, hexagonoVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
         gl.bindBuffer(gl.ARRAY_BUFFER, hexagonoVertexColorBuffer);
@@ -262,19 +283,62 @@
 
 
 
-    function webGLStart() {
+        function webGLStart() {
         var canvas = document.getElementById("leccion1-canvas");
         initGL(canvas);
         initShaders();
         initBuffers();
 
-        gl.clearColor(0.6, 0.0, 0.9, 1.0);
+        gl.clearColor(0.7, 0.0, 0.9, 1.0);
         gl.enable(gl.DEPTH_TEST);
 
-        drawScene();
+        //drawScene();
+        tick();
     }
-
-
+    function tick()
+    {
+        requestAnimationFrame(tick);
+        drawScene();
+        animate();
+    }
+    var rTri = 0;
+    var rcua=0;
+    var lastTime = 0;
+    
+    function animate()
+    {
+        
+        var timeNow = new Date().getTime();
+        if(lastTime != 0)
+        {
+            var elapsed = timeNow - lastTime;
+            rTri += (90 * elapsed) / 1000.0;
+            rcua+=(90*elapsed) / 1000.0;
+        }
+        lastTime = timeNow;
+    }
+    
+    function mvPushMatrix()
+    {
+        var copy = mat4.create();
+        mat4.set(mvMatrix,copy);
+        mvMatrixStack.push(copy);
+        
+    }
+    
+    function mvPopMatrix()
+    {
+        if(mvMatrixStack.length == 0)
+        {
+            throw "invalid popMatrix!";
+        }
+        mvMatrix = mvMatrixStack.pop();
+    }
+    
+    function degToRad(degrees)
+    {
+        return degrees * Math.PI / 180;
+    }
 </script>
 
 
