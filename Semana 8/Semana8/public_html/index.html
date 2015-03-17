@@ -290,6 +290,8 @@
     var xRot = 0;//semana 6
     var yRot = 0;//semana 6
     var zRot = 0;//semana 6
+    var xRotPM = 0.0;//semana 8
+    var zRotPM = 0.0;//semana 8
     
     function drawScene() {
         gl.viewport(1, 0, gl.viewportWidth, gl.viewportHeight);
@@ -299,7 +301,7 @@
 
         mat4.identity(mvMatrix);
         mat4.translate(mvMatrix,[3.0, -1.0, -14.0]);
-        mat4.translate(pMatrix,[-6.0,0.0,0.0]);//semana6
+        mat4.translate(pMatrix,[xRotPM,0.0,zRotPM]);//semana6
         //mat4.rotate(mvMatrix, degToRad(xRot), [1, 0, 0]);
         //mat4.rotate(mvMatrix, degToRad(yRot), [0, 1, 0]);
         //mat4.rotate(mvMatrix, degToRad(zRot), [0, 0, 1]);
